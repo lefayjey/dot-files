@@ -1,0 +1,216 @@
+# i3 config file (v2 - ISY)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+set $WS1 1: main
+set $WS2 2: web
+set $WS3 3: burp
+set $WS4 4: notes
+set $WS8 8: vpn
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:monospace 10
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:DejaVu Sans Mono 9
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal -w $(xcwd)
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec rofi -show drun -show-icons -sidebar-mode
+bindsym $mod+Shift+d exec rofi -show run -show-icons -sidebar-mode
+bindsym $mod+Shift+g  exec chromium --no-sandbox --force-device-scale-factor=1
+bindsym $mod+Shift+f  exec firefox
+bindsym $mod+Shift+o  exec /opt/Obsidian*
+bindsym $mod+Shift+n  exec thunar
+bindsym $mod+Shift+b  exec burpsuite
+bindsym $mod+l  exec /usr/bin/lock_screen.sh
+bindsym $mod+p  exec xrandr --output eDP-1 --mode 1920x1080 --output HDMI-2 --auto
+bindsym $mod+Shift+p  exec xrandr --output eDP-1 --auto
+# to duplicate screen for big dkps. DP-2 might change to DP-1
+#bindsym $mod+Shift+d  exec xrandr --output eDP-1 --auto --output DP-2 --same-a eDP-1
+bindsym $mod+Shift+s  exec flameshot gui
+
+assign [class="^Chromium$"] $WS2
+assign [class="^Firefox-esr$"] $WS2
+assign [class="^burp-StartBurp$"] $WS3
+assign [class="^Cherrytree$"] $WS4
+assign [class="^obsidian$"] $WS4
+
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
+#bindsym $mod+l focus up
+#bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+#bindsym $mod+Shift+j move left
+#bindsym $mod+Shift+k move down
+#bindsym $mod+Shift+l move up
+#bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace $WS1
+bindsym $mod+2 workspace $WS2
+bindsym $mod+3 workspace $WS3
+bindsym $mod+4 workspace $WS4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace $WS8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace $WS8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# enable sound shortcuts
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+# enable screenbrightness control
+bindsym XF86MonBrightnessUp exec sudo light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#Scratchpad
+bindsym $mod+Shift+u move scratchpad
+bindsym $mod+u scratchpad show
+
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+#bar {
+#        status_command i3status
+#}
+
+
+bar {
+        font pango:Inconsolata LGC, FontAwesome 11
+        status_command i3blocks -c ~/.config/i3/i3blocks.conf
+        #status_command i3status -c ~/.config/i3/i3status.conf
+        colors {
+                separator #565656
+                background #343838
+                statusline #a5a5a5
+                focused_workspace #464646 #464646 #efefef
+                active_workspace #464646 #464646 #efefef
+                inactive_workspace #343838 #343838 #a5a5a5
+                urgent_workspace #005f6b #005f6b #efefef
+        }
+}
+
+
+# Preventing the screen from being turned off (default behavior) since now we control the lockout
+exec --no-startup-id xset s off
+exec --no-startup-id xset -dpms
+exec --no-startup-id xset s noblank
+ 
+exec xautolock -time 7 -locker '/usr/bin/lock_screen.sh' &
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+exec setxkbmap ch
