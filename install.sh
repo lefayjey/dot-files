@@ -140,19 +140,19 @@ copy_i3_config_files() {
     #copy i3 configfiles
     echo -e "\n${BLUE}[Initiate]${NC} copying i3 config files\n"
     conf=i3blocks.conf
-    dot-file_dir="./dot-files"
+    dotfile_dir="./dot-files"
 
     mkdir -p /root/.config/i3/
-    cp $file_dir/i3/config /root/.config/i3/
+    cp $dotfile_dir/i3/config /root/.config/i3/
 	dos2unix /root/.config/i3/config
-    cp $file_dir/i3/$conf /root/.config/i3/i3blocks.conf
+    cp $dotfile_dir/i3/$conf /root/.config/i3/i3blocks.conf
 	dos2unix /root/.config/i3/i3blocks.conf
     chown -R root /root/.config/i3/
-    cp $file_dir/scripts/lock_screen.sh /usr/bin/lock_screen.sh
+    cp $dotfile_dir/scripts/lock_screen.sh /usr/bin/lock_screen.sh
     mkdir -p /home/$low_priv_user/.config/i3/
-    cp $file_dir/i3/config /home/$low_priv_user/.config/i3/
+    cp $dotfile_dir/i3/config /home/$low_priv_user/.config/i3/
     dos2unix /home/$low_priv_user/.config/i3/config
-	cp $file_dir/i3/$conf /home/$low_priv_user/.config/i3/i3blocks.conf
+	cp $dotfile_dir/i3/$conf /home/$low_priv_user/.config/i3/i3blocks.conf
 	dos2unix /home/$low_priv_user/.config/i3/i3blocks.conf
     chown -R $low_priv_user /home/$low_priv_user/.config/i3/
     chown -R $low_priv_user /usr/bin/lock_screen.sh
@@ -164,7 +164,7 @@ install_shitload_software() {
     
     #dpkg --add-architecture i386
 
-    apt install python3 python3-dev python3-pip python3-venv eog cloc sloccount nfs-common \
+    apt install dos2unix python3 python3-dev python3-pip python3-venv eog cloc sloccount nfs-common \
         renameutils sshfs jxplorer pdfgrep html2text xclip npm git tigervnc-viewer xcwd \
         i3blocks i3lock rofi dmenu htop tmux cifs-utils ranger feh scrot jsbeautifier krb5-user \
         lightdm lightdm-remote-session-freerdp2 flameshot blueman ideviceinstaller golang neovim \
@@ -176,8 +176,8 @@ install_shitload_software() {
 
     python3 -m pip install --upgrade pip
     pip3 install crackmapexec lsassy pwn impacket bloodhound threader3000 pypykatz kerbrute deathstar-empire \
-		dsinternals wesng  frida-tools objection ldapdomaindump pylnk3 roadrecon rdpy minikerberos python-ldap git+https://github.com/ly4k/Certipy.git \
-		git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump git+https://github.com/calebstewart/pwncat.git git+https://github.com/zer1t0/certi.git --upgrade
+		dsinternals wesng  frida-tools objection ldapdomaindump pylnk3 roadrecon rdpy minikerberos python-ldap "git+https://github.com/ly4k/Certipy.git" \
+		"git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump" "git+https://github.com/calebstewart/pwncat.git" "git+https://github.com/zer1t0/certi.git" --upgrade
 
     gem install evil-winrm
 	npm install -g clipboard-cli
@@ -308,9 +308,9 @@ wget_tools() {
 system_update                        || { echo -e "\n\n${RED}[Failure]${NC} System update failed.. exiting script!\n"; exit 1; }
 install_ftp                          || { echo -e "\n\n${RED}[Failure]${NC} ftp install failed.. exiting script!\n"; exit 1; }
 install_smb                          || { echo -e "\n\n${RED}[Failure]${NC} smb install failed.. exiting script!\n"; exit 1; }
+install_shitload_software            || { echo -e "\n\n${RED}[Failure]${NC} Shitload of software install failed.. exiting script!\n"; exit 1; }
 create_aliases                       || { echo -e "\n\n${RED}[Failure]${NC} Creating aliases failed.. exiting script!\n"; exit 1; }
 copy_i3_config_files                 || { echo -e "\n\n${RED}[Failure]${NC} i3 config files copy failed.. exiting script!\n"; exit 1; }
-install_shitload_software            || { echo -e "\n\n${RED}[Failure]${NC} Shitload of software install failed.. exiting script!\n"; exit 1; }
 #wget_tools                           || { echo -e "\n\n${RED}[Failure]${NC} Download useful tools failed.. exiting script!\n"; exit 1; }
 
 echo -e "\n${GREEN}[Success]${NC} finished! \n"
