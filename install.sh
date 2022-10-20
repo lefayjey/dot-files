@@ -175,7 +175,7 @@ install_shitload_software() {
 		gobuster neo4j bloodhound payloadsallthethings shellter powercat dnscat2 snmp snmp-mibs-downloader -y
 
     python3 -m pip install --upgrade pip
-    pip3 install crackmapexec lsassy pwn impacket bloodhound threader3000 pypykatz kerbrute deathstar-empire \
+    pip3 install crackmapexec lsassy pwn impacket bloodhound threader3000 pypykatz kerbrute deathstar-empire aclpwn \
 		dsinternals wesng  frida-tools objection ldapdomaindump pylnk3 roadrecon rdpy minikerberos python-ldap "git+https://github.com/ly4k/Certipy.git" \
 		"git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump" "git+https://github.com/calebstewart/pwncat.git" "git+https://github.com/zer1t0/certi.git" --upgrade
 
