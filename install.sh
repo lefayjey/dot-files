@@ -176,8 +176,9 @@ install_shitload_software() {
 
     python3 -m pip install --upgrade pip
     pip3 install crackmapexec lsassy pwn impacket bloodhound threader3000 pypykatz kerbrute deathstar-empire aclpwn \
-		dsinternals wesng  frida-tools objection ldapdomaindump pylnk3 roadrecon rdpy minikerberos python-ldap "git+https://github.com/ly4k/Certipy.git" \
-		"git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump" "git+https://github.com/calebstewart/pwncat.git" "git+https://github.com/zer1t0/certi.git" --upgrade
+		dsinternals wesng frida-tools objection ldapdomaindump pylnk3 roadrecon rdpy minikerberos python-ldap "git+https://github.com/ly4k/Certipy.git" \
+		"git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump" "git+https://github.com/calebstewart/pwncat.git" "git+https://github.com/zer1t0/certi.git" \
+		"git+https://github.com/c3c/ADExplorerSnapshot.py.git" bloodyAD autobloody pacu principalmapper scoutsuite --upgrade
 
     gem install evil-winrm
 	npm install -g clipboard-cli
