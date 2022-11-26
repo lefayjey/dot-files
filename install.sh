@@ -284,6 +284,8 @@ wget_tools() {
 	echo -e "${GREEN}Getting Cloud tools...${NC}"
 	echo -e "\tStormspotter"
 	get_latest_releases "https://github.com/Azure/Stormspotter/" ${cloud_tools}
+	echo -e "\tScubaGear"
+	wget -q "https://github.com/cisagov/ScubaGear/archive/master.zip" -O ${cloud_tools}/ScubaGear.zip
 
 	#------------------------------------------------Other-------------------------------------------------------
 	echo -e "${GREEN}Getting Other tools...${NC}"
