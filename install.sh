@@ -175,10 +175,39 @@ install_shitload_software() {
 		gobuster neo4j bloodhound payloadsallthethings shellter powercat dnscat2 snmp snmp-mibs-downloader -y
 
     python3 -m pip install --upgrade pip
-    pip3 install crackmapexec lsassy pwn impacket bloodhound threader3000 pypykatz kerbrute deathstar-empire aclpwn \
-		dsinternals wesng frida-tools objection ldapdomaindump pylnk3 roadrecon rdpy minikerberos python-ldap "git+https://github.com/ly4k/Certipy.git" \
-		"git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump" "git+https://github.com/calebstewart/pwncat.git" "git+https://github.com/zer1t0/certi.git" \
-		"git+https://github.com/c3c/ADExplorerSnapshot.py.git" bloodyAD autobloody pacu principalmapper scoutsuite --upgrade
+    pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade
+    pipx ensurepath
+    pipx install threader3000 --force
+    pipx install pypykatz --force
+    pipx install deathstar-empire --force
+    pipx install aclpwn --force
+    pipx install wesng --force
+    pipx install frida-tools --force
+    pipx install objection --force
+    pipx install roadrecon --force
+	pipx install rdpy --force
+    pipx install bloodyAD --force
+    pipx install autobloody --force
+    pipx install minikerberos --force
+    pipx install pacu --force
+    pipx install principalmapper --force
+    pipx install scoutsuite --force
+	pipx install pwncat-cs --force
+	pipx install "git+https://github.com/c3c/ADExplorerSnapshot.py.git" --force
+    pipx install git+https://github.com/dirkjanm/ldapdomaindump.git --force
+    pipx install git+https://github.com/mpgn/CrackMapExec.git --force
+    pipx install git+https://github.com/ThePorgs/impacket.git --force
+    pipx install git+https://github.com/dirkjanm/adidnsdump.git --force
+    pipx install git+https://github.com/zer1t0/certi.git --force
+    pipx install git+https://github.com/ly4k/Certipy.git --force
+    pipx install git+https://github.com/fox-it/BloodHound.py.git --force
+    pipx install git+https://github.com/franc-pentest/ldeep.git --force
+    pipx install git+https://github.com/garrettfoster13/pre2k.git --force
+    pipx install git+https://github.com/zblurx/certsync.git --force
+    pipx install hekatomb --force
+    pipx install git+https://github.com/blacklanternsecurity/MANSPIDER --force
+    pipx install git+https://github.com/p0dalirius/Coercer --force
+    pipx install git+https://github.com/login-securite/DonPAPI --force
 
     gem install evil-winrm
 	npm install -g clipboard-cli
@@ -314,6 +343,6 @@ install_smb                          || { echo -e "\n\n${RED}[Failure]${NC} smb 
 install_shitload_software            || { echo -e "\n\n${RED}[Failure]${NC} Shitload of software install failed.. exiting script!\n"; exit 1; }
 create_aliases                       || { echo -e "\n\n${RED}[Failure]${NC} Creating aliases failed.. exiting script!\n"; exit 1; }
 copy_i3_config_files                 || { echo -e "\n\n${RED}[Failure]${NC} i3 config files copy failed.. exiting script!\n"; exit 1; }
-#wget_tools                           || { echo -e "\n\n${RED}[Failure]${NC} Download useful tools failed.. exiting script!\n"; exit 1; }
+wget_tools                           || { echo -e "\n\n${RED}[Failure]${NC} Download useful tools failed.. exiting script!\n"; exit 1; }
 
 echo -e "\n${GREEN}[Success]${NC} finished! \n"
