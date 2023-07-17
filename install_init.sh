@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # Author: JOF
-# last updated: 26/11/2022
+# last updated: 17/07/2023
 
 RED='\033[1;31m'
 GREEN='\033[1;32m'

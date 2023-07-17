@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # Author: JOF
-# last updated: 26/11/2022
+# last updated: 17/07/2023
 
 RED='\033[1;31m'
 GREEN='\033[1;32m'
@@ -135,11 +135,7 @@ wget_tools() {
 	wget -q "https://www.ampliasecurity.com/research/wce_v1_42beta_x32.zip" -O ${windows_tools}/wce_v1_42beta_x32.zip
 	wget -q "https://www.ampliasecurity.com/research/wce_v1_42beta_x64.zip" -O ${windows_tools}/wce_v1_42beta_x64.zip
 	echo -e "\tNirsoft Tools"
-	wget -q "https://www.nirsoft.net/toolsdownload/credentialsfileview-x64.zip" -O ${windows_tools}/credentialsfileview-x64.zip
-	wget -q "https://www.nirsoft.net/utils/regfileexport.zip" -O ${windows_tools}/regfileexport.zip
-	wget -q "https://www.nirsoft.net/toolsdownload/vaultpasswordview-x64.zip" -O ${windows_tools}/vaultpasswordview-x64.zip
-	wget -q "https://www.nirsoft.net/toolsdownload/webbrowserpassview.zip" -O ${windows_tools}/webbrowserpassview.zip
-	wget -q "https://www.nirsoft.net/utils/dllexp-x64.zip" -O ${windows_tools}/dllexp-x64.zip
+	wget -q "https://download.nirsoft.net/nirsoft_package_enc_1.30.3.zip" -O ${windows_tools}/nirsoft_package_enc_1.30.3.zip
 
 	#Evasion and bypass
 	echo -e "\tInsecurePowerShell"
@@ -208,23 +204,15 @@ wget_tools() {
 	echo -e "\tHeidiSQL"
 	wget -q "https://www.heidisql.com/downloads/releases/HeidiSQL_11.3_64_Portable.zip" -O ${other_tools}/HeidiSQL_11.3_64_Portable.zip
 	echo -e "\tysoserial"
-	wget -q "https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar" -O ${other_tools}/ysoserial-master-SNAPSHOT.jar
-	wget -q "https://github.com/pwntester/ysoserial.net/releases/download/v1.34/ysoserial-1.34.zip" -O ${other_tools}/ysoserial-1.34.zip
+	wget -q "https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar" -O ${other_tools}/ysoserial-all.jar
+	wget -q "https://github.com/pwntester/ysoserial.net/releases/latest/download/ysoserial-1.35.zip" -O ${other_tools}/ysoserial-1.35.zip
 	
 	chown $low_priv_user:$low_priv_user -R $tools_dir
 }
 
 #### Calling functions
 system_update                        || { echo -e "\n\n${RED}[Failure]${NC} System update failed.. exiting script!\n"; exit 1; }
-<<<<<<< HEAD:install.sh
-install_ftp                          || { echo -e "\n\n${RED}[Failure]${NC} ftp install failed.. exiting script!\n"; exit 1; }
-install_smb                          || { echo -e "\n\n${RED}[Failure]${NC} smb install failed.. exiting script!\n"; exit 1; }
-install_shitload_software            || { echo -e "\n\n${RED}[Failure]${NC} Shitload of software install failed.. exiting script!\n"; exit 1; }
-create_aliases                       || { echo -e "\n\n${RED}[Failure]${NC} Creating aliases failed.. exiting script!\n"; exit 1; }
-copy_i3_config_files                 || { echo -e "\n\n${RED}[Failure]${NC} i3 config files copy failed.. exiting script!\n"; exit 1; }
-=======
 install_software                     || { echo -e "\n\n${RED}[Failure]${NC} Shitload of software install failed.. exiting script!\n"; exit 1; }
->>>>>>> aae6e83ce5cebca77699942358152bc5d678d3ee:install_tools.sh
 wget_tools                           || { echo -e "\n\n${RED}[Failure]${NC} Download useful tools failed.. exiting script!\n"; exit 1; }
 
 echo -e "\n${GREEN}[Success]${NC} finished! \n"
