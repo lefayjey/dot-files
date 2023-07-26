@@ -76,42 +76,51 @@ EOF
 
 	cat <<EOF >/usr/local/sbin/bloodhound-start
 #!/bin/bash
-NEOSTATUS=\$(sudo neo4j status)
-if [ "\$NEOSTATUS" == "Neo4j is not running" ]; then
-   echo "Database is not running. Starting..."
-   sudo neo4j start
-   sleep 10
-   bloodhound --no-sandbox
-else
-   echo "Database is already started."
-   bloodhound --no-sandbox
-fi
+sudo neo4j console &
+sleep 10
+bloodhound --no-sandbox
 EOF
 	chmod +x /usr/local/sbin/bloodhound-start
 
 	##adding aliases to zshrc
     echo -e "\n${BLUE}[Initiate]${NC} aliases \n"
     echo -e "## $low_priv_user's aliases" >> /home/$low_priv_user/.zshrc
-    echo 'alias impacket="/usr/share/doc/python3-impacket/examples"' >> /home/$low_priv_user/.zshrc
     echo 'alias www="python3 -m http.server 8000 --directory /opt/PentestTools/"' >> /home/$low_priv_user/.zshrc
-    echo 'alias www_here="python3 -m http.server 8000"' >> /home/$low_priv_user/.zshrc
-    echo 'alias smb="python3 /usr/local/bin/smbserver.py TOOLS /opt/PentestTools/ -smb2 -username username -password password"' >> /home/$low_priv_user/.zshrc
-    echo 'alias smb_here="python3 /usr/local/bin/smbserver.py SHARE `pwd` -smb2 -username username -password password"' >> /home/$low_priv_user/.zshrc
+    echo 'alias wwwhere="python3 -m http.server 8000"' >> /home/$low_priv_user/.zshrc
+    echo 'alias smb="python3 $(which smbserver.py) TOOLS /opt/PentestTools/ -smb2 -username username -password password"' >> /home/$low_priv_user/.zshrc
+    echo 'alias smb_here="python3 $(which smbserver.py) SHARE `pwd` -smb2 -username username -password password"' >> /home/$low_priv_user/.zshrc
     echo 'alias htb="sudo openvpn /opt/CTF/hackthebox/lab_cerebro11.ovpn"' >> /home/$low_priv_user/.zshrc
     echo 'alias thm="sudo openvpn /opt/CTF/tryhackme/cerebro11.ovpn"' >> /home/$low_priv_user/.zshrc
 	echo 'alias vpnip="/sbin/ifconfig tun0 | grep "inet " | cut -d " " -f 10"' >> /home/$low_priv_user/.zshrc
 	echo 'alias serv="sudo service apache2 start; sudo service smbd start; sudo service nmbd start; sudo service pure-ftpd start; sudo service ssh start"' >> /home/$low_priv_user/.zshrc
+	echo 'alias dockershell="sudo docker run --rm -i -t --entrypoint=/bin/bash"' >> /home/$low_priv_user/.zshrc
+	echo 'alias dockershellsh="sudo docker run --rm -i -t --entrypoint=/bin/sh"' >> /home/$low_priv_user/.zshrc
+	echo 'function dockershellhere() {' >> /home/$low_priv_user/.zshrc
+	echo '	    dirname=${PWD##*/}' >> /home/$low_priv_user/.zshrc
+	echo '	        sudo docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"' >> /home/$low_priv_user/.zshrc
+	echo '	}' >> /home/$low_priv_user/.zshrc
+	echo 'function dockershellshhere() {' >> /home/$low_priv_user/.zshrc
+	echo '	    dirname=${PWD##*/}' >> /home/$low_priv_user/.zshrc
+	echo '	        sudo docker run --rm -it --entrypoint=/bin/sh -v `pwd`:/${dirname} -w /${dirname} "$@"' >> /home/$low_priv_user/.zshrc
+	echo '	}' >> /home/$low_priv_user/.zshrc
 
     echo -e "## root's aliases" >> /root/.zshrc
-    echo 'alias impacket="/usr/share/doc/python3-impacket/examples"' >> /root/.zshrc
-    echo 'alias www="python3 -m http.server 8000 --directory /opt/PentestTools/"; echo "IP: http://$(vpnip):8000\nDirectory: /opt/PentestTools/"' >> /root/.zshrc
-    echo 'alias www_here="python3 -m http.server 8000"' >> /root/.zshrc
-    echo 'alias smb="python3 /usr/share/doc/python3-impacket/examples/smbserver.py TOOLS /opt/PentestTools/ -smb2 -username username -password password"' >> /root/.zshrc
-    echo 'alias smb_here="python3 /usr/local/bin/smbserver.py SHARE `pwd` -smb2 -username username -password password"' >> /root/.zshrc
+    echo 'alias www="python3 -m http.server 8000 --directory /opt/PentestTools/"' >> /root/.zshrc
+    echo 'alias wwwhere="python3 -m http.server 8000"' >> /root/.zshrc
+    echo 'alias smb="python3 $(which smbserver.py) TOOLS /opt/PentestTools/ -smb2 -username username -password password"' >> /root/.zshrc
+    echo 'alias smb_here="python3 $(which smbserver.py) SHARE `pwd` -smb2 -username username -password password"' >> /root/.zshrc
     echo 'alias htb="openvpn /opt/CTF/hackthebox/lab_cerebro11.ovpn"' >> /root/.zshrc
     echo 'alias thm="openvpn /opt/CTF/tryhackme/cerebro11.ovpn"' >> /root/.zshrc
 	echo 'alias vpnip="/sbin/ifconfig tun0 | grep "inet " | cut -d " " -f 10"' >> /root/.zshrc
 	echo 'alias serv="sudo service apache2 start; sudo service smbd start; sudo service nmbd start; sudo service pure-ftpd start; sudo service ssh start"' >> /root/.zshrc
+	echo 'function dockershellhere() {' >> /root/.zshrc
+	echo '	    dirname=${PWD##*/}' >> /h/root/.zshrc
+	echo '	        sudo docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"' >> /root/.zshrc
+	echo '	}' >> /root/.zshrc
+	echo 'function dockershellshhere() {' >> /root/.zshrc
+	echo '	    dirname=${PWD##*/}' >> /root/.zshrc
+	echo '	        sudo docker run --rm -it --entrypoint=/bin/sh -v `pwd`:/${dirname} -w /${dirname} "$@"' >> /root/.zshrc
+	echo '	}' >> /root/.zshrc
 
     echo -e "\n${GREEN}[Success]${NC} aliases \n"
 }

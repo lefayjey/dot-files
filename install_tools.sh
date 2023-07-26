@@ -62,14 +62,15 @@ install_software() {
     pipx install wesng --force
     pipx install frida-tools --force
     pipx install objection --force
-    pipx install roadrecon --force
 	pipx install rdpy --force
     pipx install bloodyAD --force
     pipx install autobloody --force
     pipx install minikerberos --force
     pipx install pacu --force
     pipx install principalmapper --force
+    pipx install roadrecon --force
     pipx install scoutsuite --force
+	pipx install prowler --force
 	pipx install pwncat-cs --force
 	pipx install "git+https://github.com/c3c/ADExplorerSnapshot.py.git" --force
     pipx install git+https://github.com/dirkjanm/ldapdomaindump.git --force
