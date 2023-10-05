@@ -38,7 +38,7 @@ install_smb() {
 	systemctl start smbd
 	systemctl start nmbd
 	mkdir -p /home/$low_priv_user/smb
-	chmod -R $low_priv_user:$low_priv_user /home/$low_priv_user/smb
+	chown -R $low_priv_user:$low_priv_user /home/$low_priv_user/smb
 	echo -e "\n${GREEN}[Success]${NC} Installing SMB\n"
 }
 
@@ -114,7 +114,7 @@ EOF
 	echo 'alias vpnip="/sbin/ifconfig tun0 | grep "inet " | cut -d " " -f 10"' >> /root/.zshrc
 	echo 'alias serv="sudo service apache2 start; sudo service smbd start; sudo service nmbd start; sudo service pure-ftpd start; sudo service ssh start"' >> /root/.zshrc
 	echo 'function dockershellhere() {' >> /root/.zshrc
-	echo '	    dirname=${PWD##*/}' >> /h/root/.zshrc
+	echo '	    dirname=${PWD##*/}' >> /root/.zshrc
 	echo '	        sudo docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"' >> /root/.zshrc
 	echo '	}' >> /root/.zshrc
 	echo 'function dockershellshhere() {' >> /root/.zshrc

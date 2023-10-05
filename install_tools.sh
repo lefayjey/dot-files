@@ -43,8 +43,8 @@ install_software() {
     #dpkg --add-architecture i386
 
     apt install dos2unix python3 python3-dev python3-pip python3-venv eog cloc sloccount nfs-common \
-        renameutils sshfs jxplorer pdfgrep html2text xclip npm git tigervnc-viewer xcwd \
-        i3blocks i3lock rofi dmenu htop tmux cifs-utils ranger feh scrot jsbeautifier krb5-user \
+        renameutils sshfs jxplorer html2text xclip npm git tigervnc-viewer xcwd \
+        i3blocks i3lock rofi suckless-tools htop tmux cifs-utils ranger feh scrot jsbeautifier krb5-user \
         lightdm lightdm-remote-session-freerdp2 flameshot blueman ideviceinstaller golang neovim \
         jadx filezilla parallel rlwrap 2to3 mono-devel default-jdk graphicsmagick-imagemagick-compat \
         redis-server network-manager-openvpn sqsh freetds-bin freetds-common freetds-dev \
@@ -74,7 +74,7 @@ install_software() {
 	pipx install pwncat-cs --force
 	pipx install "git+https://github.com/c3c/ADExplorerSnapshot.py.git" --force
     pipx install git+https://github.com/dirkjanm/ldapdomaindump.git --force
-    pipx install git+https://github.com/mpgn/CrackMapExec.git --force
+    pipx install git+https://github.com/Pennyw0rth/NetExec.git --force
     pipx install git+https://github.com/ThePorgs/impacket.git --force
     pipx install git+https://github.com/dirkjanm/adidnsdump.git --force
     pipx install git+https://github.com/zer1t0/certi.git --force
