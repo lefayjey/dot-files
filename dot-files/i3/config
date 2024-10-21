@@ -41,7 +41,7 @@ bindsym $mod+Shift+g  exec chromium --no-sandbox --force-device-scale-factor=1
 bindsym $mod+Shift+f  exec firefox
 bindsym $mod+Shift+o  exec /opt/Obsidian*
 bindsym $mod+Shift+n  exec thunar
-bindsym $mod+Shift+b  exec burpsuite
+bindsym $mod+Shift+b  exec BurpSuitePro
 bindsym $mod+l  exec /usr/bin/lock_screen.sh
 bindsym $mod+p  exec xrandr --output eDP-1 --mode 1920x1080 --output HDMI-2 --auto
 bindsym $mod+Shift+p  exec xrandr --output eDP-1 --auto
@@ -50,9 +50,8 @@ bindsym $mod+Shift+p  exec xrandr --output eDP-1 --auto
 bindsym $mod+Shift+s  exec flameshot gui
 
 assign [class="^Chromium$"] $WS2
-assign [class="^Firefox-esr$"] $WS2
-assign [class="^burp-StartBurp$"] $WS3
-assign [class="^Cherrytree$"] $WS4
+assign [class="^firefox-esr$"] $WS2
+assign [class="^install4j.burp.StartBurp$"] $WS3
 assign [class="^obsidian$"] $WS4
 
 
