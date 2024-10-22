@@ -14,6 +14,14 @@ if [ "$EUID" -ne 0 ]
     exit
 fi
 
+update_install(){
+	echo -e "\n${BLUE}[Initiate]${NC} Install essential software \n"
+    apt update && apt upgrade -y
+	apt install i3blocks i3lock rofi suckless-tools htop xcwd flameshot sshfs xclip ghidra filezilla ntpdate \
+		rlwrap 2to3 gobuster eyewitness seclists flameshot neo4j bloodhound krb5-user tigervnc-viewer jadx gdb ltrace
+	echo -e "\n${GREEN}[Success]${NC} Install essential software \n"
+}
+
 install_ftp() {
     echo -e "\n${BLUE}[Initiate]${NC} Installing FTP\n"
 	apt install pure-ftpd
@@ -95,6 +103,7 @@ EOF
 	echo 'alias serv="sudo service apache2 start; sudo service smbd start; sudo service nmbd start; sudo service pure-ftpd start; sudo service ssh start"' >> /home/$low_priv_user/.zshrc
 	echo 'alias dockershell="sudo docker run --rm -i -t --entrypoint=/bin/bash"' >> /home/$low_priv_user/.zshrc
 	echo 'alias dockershellsh="sudo docker run --rm -i -t --entrypoint=/bin/sh"' >> /home/$low_priv_user/.zshrc
+	echo 'alias clipboard="xclip -selection clipboard"' >> /home/$low_priv_user/.zshrc
 	echo 'function dockershellhere() {' >> /home/$low_priv_user/.zshrc
 	echo '	    dirname=${PWD##*/}' >> /home/$low_priv_user/.zshrc
 	echo '	        sudo docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"' >> /home/$low_priv_user/.zshrc
@@ -149,6 +158,7 @@ copy_i3_config_files() {
 }
 
 #### Calling functions
+update_install                       || { echo -e "\n\n${RED}[Failure]${NC} Installation of essential software failed.. exiting script!\n"; exit 1; }
 install_ftp                          || { echo -e "\n\n${RED}[Failure]${NC} ftp install failed.. exiting script!\n"; exit 1; }
 install_smb                          || { echo -e "\n\n${RED}[Failure]${NC} smb install failed.. exiting script!\n"; exit 1; }
 create_aliases                       || { echo -e "\n\n${RED}[Failure]${NC} Creating aliases failed.. exiting script!\n"; exit 1; }

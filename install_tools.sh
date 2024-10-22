@@ -42,57 +42,66 @@ install_software() {
     
     #dpkg --add-architecture i386
 
-    apt install dos2unix python3 python3-dev python3-pip python3-venv eog cloc sloccount nfs-common \
-        renameutils sshfs jxplorer html2text xclip npm git tigervnc-viewer xcwd \
-        i3blocks i3lock rofi suckless-tools htop tmux cifs-utils ranger feh scrot jsbeautifier krb5-user \
-        lightdm lightdm-remote-session-freerdp2 flameshot blueman ideviceinstaller golang neovim \
-        jadx filezilla parallel rlwrap 2to3 mono-devel default-jdk graphicsmagick-imagemagick-compat \
-        redis-server network-manager-openvpn sqsh freetds-bin freetds-common freetds-dev \
-        network-manager-ssh network-manager-openconnect libcurl4-openssl-dev dirsearch ntpdate \
-        libpcre3-dev libssh-dev veil eyewitness seclists powershell-empire ltrace ghidra gdb \
-		gobuster neo4j bloodhound payloadsallthethings shellter powercat dnscat2 snmp snmp-mibs-downloader -y
-
-    python3 -m pip install --upgrade pip
-    pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade
-    pipx ensurepath
-    pipx install threader3000 --force
-    pipx install pypykatz --force
-    pipx install deathstar-empire --force
-    pipx install aclpwn --force
-    pipx install wesng --force
-    pipx install frida-tools --force
-    pipx install objection --force
-	pipx install rdpy --force
-    pipx install bloodyAD --force
-    pipx install autobloody --force
-    pipx install minikerberos --force
-    pipx install pacu --force
-    pipx install principalmapper --force
-    pipx install roadrecon --force
-    pipx install scoutsuite --force
-	pipx install prowler --force
+    apt install cloc sloccount renameutils html2text npm golang \
+        ranger feh scrot jsbeautifier blueman ideviceinstaller neovim \
+        parallel mono-devel default-jdk redis-server freetds-bin freetds-common freetds-dev \
+        network-manager-openvpn network-manager-ssh network-manager-openconnect \
+        libcurl4-openssl-dev libpcre3-dev libssh-dev \
+		jxplorer veil shellter powercat dnscat2 snmp snmp-mibs-downloader -y
+	python3 -m pip install --upgrade pip
+	pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade
+	pipx ensurepath
+	
+	#Scan/exploit
+	pipx install threader3000 --force
 	pipx install pwncat-cs --force
+	pipx install wesng --force
+
+	#AD/Windows
+	pipx install pypykatz --force
+	pipx install aclpwn --force
+	pipx install autobloody --force
+	pipx install minikerberos --force
 	pipx install "git+https://github.com/c3c/ADExplorerSnapshot.py.git" --force
+	pipx install deathstar-empire --force
+
+	#Mobile
+	pipx install frida-tools --force
+	pipx install objection --force
+
+	#Cloud
+	pipx install pacu --force
+	pipx install principalmapper --force
+	pipx install roadrecon --force
+	pipx install scoutsuite --force
+	pipx install prowler --force
+
+	#linWinPwn
     pipx install git+https://github.com/dirkjanm/ldapdomaindump.git --force
     pipx install git+https://github.com/Pennyw0rth/NetExec.git --force
-    pipx install git+https://github.com/ThePorgs/impacket.git --force
+    pipx install git+https://github.com/fortra/impacket.git --force
     pipx install git+https://github.com/dirkjanm/adidnsdump.git --force
     pipx install git+https://github.com/zer1t0/certi.git --force
     pipx install git+https://github.com/ly4k/Certipy.git --force
-    pipx install git+https://github.com/fox-it/BloodHound.py.git --force
+    pipx install git+https://github.com/dirkjanm/bloodhound.py --force
+    pipx install "git+https://github.com/dirkjanm/BloodHound.py@bloodhound-ce" --force --suffix '_ce'
     pipx install git+https://github.com/franc-pentest/ldeep.git --force
     pipx install git+https://github.com/garrettfoster13/pre2k.git --force
     pipx install git+https://github.com/zblurx/certsync.git --force
     pipx install hekatomb --force
     pipx install git+https://github.com/blacklanternsecurity/MANSPIDER --force
     pipx install git+https://github.com/p0dalirius/Coercer --force
+    pipx install git+https://github.com/CravateRouge/bloodyAD --force
     pipx install git+https://github.com/login-securite/DonPAPI --force
+    pipx install git+https://github.com/p0dalirius/RDWAtool --force
+    pipx install git+https://github.com/almandin/krbjack --force
+    pipx install git+https://github.com/CompassSecurity/mssqlrelay.git --force
+    #pipx install --include-deps git+https://github.com/ajm4n/adPEAS --force
+    pipx install git+https://github.com/oppsec/breads.git --force
+    pipx install git+https://github.com/p0dalirius/smbclient-ng --force
 
-    gem install evil-winrm
-	npm install -g clipboard-cli
-	wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef.sh | bash
-
-    echo -e "\n${GREEN}[Success]${NC} Install shitload of software \n"
+	bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
+	echo -e "\n${GREEN}[Success]${NC} Install shitload of software \n"
 }
 
 wget_tools() {
