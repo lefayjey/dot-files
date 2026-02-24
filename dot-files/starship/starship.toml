@@ -1,0 +1,46 @@
+format = """
+$username$hostname$directory$git_branch$time$cmd_duration
+[└─](bold green)$character"""
+
+[username]
+show_always = true
+style_user = "bold blue"
+style_root = "bold red"
+format = "[┌──\\(](bold green)[$user]($style)"
+
+[hostname]
+ssh_only = false
+style = "bold blue"
+format = "[@](bold blue)[$hostname]($style)[\\)](bold green)"
+
+[directory]
+style = "bold white"
+truncation_length = 5
+truncation_symbol = ".../"
+format = "[-\\[](bold green)[$path]($style)[\\]](bold green)"
+
+[time]
+disabled = false
+format = " [\\[$time\\]](dimmed green)"
+time_format = "%d/%m %H:%M"
+
+[git_branch]
+style = "bold yellow"
+format = " [$symbol$branch]($style)"
+symbol = ""
+
+[git_status]
+disabled = true
+
+[python]
+style = "bold yellow"
+format = " [py:$version]($style)"
+
+[cmd_duration]
+min_time = 2_000
+style = "bold yellow"
+format = " [$duration]($style)"
+
+[character]
+success_symbol = "[\\$](bold blue)"
+error_symbol = "[\\$](bold red)"

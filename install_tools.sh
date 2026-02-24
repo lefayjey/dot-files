@@ -1,6 +1,6 @@
 #!/bin/bash -e
-# Author: JOF
-# last updated: 17/07/2023
+# Author: lefayjey
+# last updated: 24/02/2026
 
 RED='\033[1;31m'
 GREEN='\033[1;32m'
@@ -8,7 +8,7 @@ BLUE='\033[1;34m'
 NC='\033[0m'
 
 low_priv_user="kali"
-tools_dir="/opt/Tools/"
+tools_dir="/opt/Tools"
 
 windows_tools="${tools_dir}/windows"
 linux_tools="${tools_dir}/linux"
@@ -16,67 +16,63 @@ mobile_tools="${tools_dir}/mobile"
 other_tools="${tools_dir}/other"
 cloud_tools="${tools_dir}/cloud"
 
-if [ "$EUID" -ne 0 ]
-    then echo "Please run with sudo or as root "
-    exit
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run with sudo or as root"
+    exit 1
 fi
 
-get_latest_releases () {
-	urls=$(curl -s $1/releases/latest | grep "tag" | cut -d "\"" -f 2);
-	for u in $urls; do
-		files=$(curl -s $u | grep "releases/download"| cut -d "\"" -f 2);
-		for f in $files; do
-			wget -q -N "https://github.com/"$f -P $2/;
-		done;
-	done;
+get_latest_releases() {
+    urls=$(curl -s "$1/releases/latest" | grep "tag" | cut -d "\"" -f 2)
+    for u in $urls; do
+        files=$(curl -s "$u" | grep "releases/download" | cut -d "\"" -f 2)
+        for f in $files; do
+            wget -q -N "https://github.com/$f" -P "$2/"
+        done
+    done
 }
 
-system_update(){
+system_update() {
     echo -e "\n${BLUE}[Initiate]${NC} System update\n"
     apt update && apt upgrade -y
     echo -e "\n${GREEN}[Success]${NC} System update\n"
 }
 
 install_software() {
-    echo -e "\n${BLUE}[Initiate]${NC} Install shitload of software \n"
-    
-    #dpkg --add-architecture i386
+    echo -e "\n${BLUE}[Initiate]${NC} Install additional software\n"
 
-    apt install cloc sloccount renameutils html2text npm golang \
+    apt install -y cloc sloccount renameutils html2text npm golang \
         ranger feh scrot jsbeautifier blueman ideviceinstaller neovim \
         parallel mono-devel default-jdk redis-server freetds-bin freetds-common freetds-dev \
         network-manager-openvpn network-manager-ssh network-manager-openconnect \
         libcurl4-openssl-dev libpcre3-dev libssh-dev \
-		jxplorer veil shellter powercat dnscat2 snmp snmp-mibs-downloader -y
-	python3 -m pip install --upgrade pip
-	pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade
-	pipx ensurepath
-	
-	#Scan/exploit
-	pipx install threader3000 --force
-	pipx install pwncat-cs --force
-	pipx install wesng --force
+        jxplorer veil shellter powercat dnscat2 snmp snmp-mibs-downloader
 
-	#AD/Windows
-	pipx install pypykatz --force
-	pipx install aclpwn --force
-	pipx install autobloody --force
-	pipx install minikerberos --force
-	pipx install "git+https://github.com/c3c/ADExplorerSnapshot.py.git" --force
-	pipx install deathstar-empire --force
+    python3 -m pip install --upgrade pip
+    pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade
+    pipx ensurepath
 
-	#Mobile
-	pipx install frida-tools --force
-	pipx install objection --force
+    # Scan/exploit
+    pipx install pwncat-cs --force
+    pipx install wesng --force
 
-	#Cloud
-	pipx install pacu --force
-	pipx install principalmapper --force
-	pipx install roadrecon --force
-	pipx install scoutsuite --force
-	pipx install prowler --force
+    # AD/Windows
+    pipx install pypykatz --force
+    pipx install autobloody --force
+    pipx install minikerberos --force
+    pipx install "git+https://github.com/c3c/ADExplorerSnapshot.py.git" --force
 
-	#linWinPwn
+    # Mobile
+    pipx install frida-tools --force
+    pipx install objection --force
+
+    # Cloud
+    pipx install pacu --force
+    pipx install principalmapper --force
+    pipx install roadrecon --force
+    pipx install scoutsuite --force
+    pipx install prowler --force
+
+    # linWinPwn tooling
     pipx install git+https://github.com/dirkjanm/ldapdomaindump.git --force
     pipx install git+https://github.com/Pennyw0rth/NetExec.git --force
     pipx install git+https://github.com/fortra/impacket.git --force
@@ -96,134 +92,105 @@ install_software() {
     pipx install git+https://github.com/p0dalirius/RDWAtool --force
     pipx install git+https://github.com/almandin/krbjack --force
     pipx install git+https://github.com/CompassSecurity/mssqlrelay.git --force
-    #pipx install --include-deps git+https://github.com/ajm4n/adPEAS --force
     pipx install git+https://github.com/oppsec/breads.git --force
     pipx install git+https://github.com/p0dalirius/smbclient-ng --force
 
-	bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
-	echo -e "\n${GREEN}[Success]${NC} Install shitload of software \n"
+    # GEF for GDB
+    bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
+
+    echo -e "\n${GREEN}[Success]${NC} Install additional software\n"
 }
 
 wget_tools() {
-    
-	mkdir -p ${tools_dir}
-    mkdir -p ${windows_tools}
-    mkdir -p ${other_tools}
-	mkdir -p ${mobile_tools}
-	mkdir -p ${cloud_tools}
+    mkdir -p "${windows_tools}" "${other_tools}" "${mobile_tools}" "${cloud_tools}"
 
-	#-------------------------------------------------------Windows----------------------------------------------------------
-	echo -e "${GREEN}Getting Windows tools:${NC}"
+    #-------------------------------------------------------Windows----------------------------------------------------------
+    echo -e "${GREEN}Getting Windows tools:${NC}"
 
-	#Windows Misc Utilities 
-	echo -e "\tSysInternalsSuite"
-	wget -q "https://download.sysinternals.com/files/SysinternalsSuite.zip" -O ${windows_tools}/SysinternalsSuite.zip
-	echo -e "\tProcessHacker"
-	get_latest_releases "https://github.com/processhacker/processhacker" ${windows_tools}
-	echo -e "\tOllydbg"
-	wget -q "http://www.ollydbg.de/odbg110.zip" -O ${windows_tools}/odbg110.zip
-	echo -e "\tAPI Monitor"
-	wget -q "http://www.rohitab.com/download/api-monitor-v2r13-x86-x64.zip" -O ${windows_tools}/api-monitor-v2r13-x86-x64.zip
-	echo -e "\tNetscan"
-	wget -q "https://www.softperfect.com/download/files/netscan_portable.zip" -O ${windows_tools}/netscan_portable.zipecho -e "\tSMBEagle"
-	wget -q "https://github.com/punk-security/smbeagle/releases/download/4.0.1/smbeagle_4.0.1_linux_amd64.zip" -O ${windows_tools}/smbeagle_4.0.1_linux_amd64.zip
-	wget -q "https://github.com/punk-security/smbeagle/releases/download/4.0.1/smbeagle_4.0.1_win_x64.zip" -O ${windows_tools}/smbeagle_4.0.1_win_x64.zip
-	#C2
-	echo -e "\tEmpire"
-	wget -q "https://github.com/BC-SECURITY/Empire/archive/master.zip" -O ${windows_tools}/Empire.zip
-	echo -e "\tCovenant"
-	wget -q "https://github.com/cobbr/Covenant/archive/master.zip" -O ${windows_tools}/Covenant.zip
-	echo -e "\tSILENTTRINITY"
-	wget -q "https://github.com/byt3bl33d3r/SILENTTRINITY/archive/master.zip" -O ${windows_tools}/SILENTRINITY.zip
-	echo -e "\tStarKiller"
-	get_latest_releases "https://github.com/BC-SECURITY/Starkiller" ${windows_tools}
-	echo -e "\tOffensivePipeline"
-	get_latest_releases "https://github.com/Aetsu/OffensivePipeline" ${windows_tools}
-	
-	#Credentials collection
-	echo -e "\tfgdump - wce"
-	wget -q "http://foofus.net/goons/fizzgig/fgdump/fgdump-2.1.0-exeonly.zip" -O ${windows_tools}/fgdump-2.1.0-exeonly.zip
-	wget -q "https://www.ampliasecurity.com/research/wce_v1_42beta_x32.zip" -O ${windows_tools}/wce_v1_42beta_x32.zip
-	wget -q "https://www.ampliasecurity.com/research/wce_v1_42beta_x64.zip" -O ${windows_tools}/wce_v1_42beta_x64.zip
-	echo -e "\tNirsoft Tools"
-	wget -q "https://download.nirsoft.net/nirsoft_package_enc_1.30.3.zip" -O ${windows_tools}/nirsoft_package_enc_1.30.3.zip
+    # Windows Misc Utilities
+    echo -e "\tSysInternalsSuite"
+    wget -q "https://download.sysinternals.com/files/SysinternalsSuite.zip" -O "${windows_tools}/SysinternalsSuite.zip"
+    echo -e "\tAPI Monitor"
+    wget -q "http://www.rohitab.com/download/api-monitor-v2r13-x86-x64.zip" -O "${windows_tools}/api-monitor-v2r13-x86-x64.zip"
+    echo -e "\tNetscan"
+    wget -q "https://www.softperfect.com/download/files/netscan_portable.zip" -O "${windows_tools}/netscan_portable.zip"
+    echo -e "\tSMBEagle"
+    wget -q "https://github.com/punk-security/smbeagle/releases/download/4.0.1/smbeagle_4.0.1_linux_amd64.zip" -O "${windows_tools}/smbeagle_4.0.1_linux_amd64.zip"
+    wget -q "https://github.com/punk-security/smbeagle/releases/download/4.0.1/smbeagle_4.0.1_win_x64.zip" -O "${windows_tools}/smbeagle_4.0.1_win_x64.zip"
 
-	#Evasion and bypass
-	echo -e "\tInsecurePowerShell"
-	get_latest_releases "https://github.com/cobbr/InsecurePowerShell/" ${windows_tools}
-	echo -e "\tPowerShdll"
-	get_latest_releases "https://github.com/p3nt4/PowerShdll" ${windows_tools}
+    # C2
+    echo -e "\tEmpire"
+    wget -q "https://github.com/BC-SECURITY/Empire/archive/master.zip" -O "${windows_tools}/Empire.zip"
+    echo -e "\tStarKiller"
+    get_latest_releases "https://github.com/BC-SECURITY/Starkiller" "${windows_tools}"
+    echo -e "\tOffensivePipeline"
+    get_latest_releases "https://github.com/Aetsu/OffensivePipeline" "${windows_tools}"
 
-	#PowerShell and Sharp Collections
-	echo -e "\tPowerSploit"
-	wget -q "https://github.com/PowerShellMafia/PowerSploit/archive/master.zip" -O ${windows_tools}/PowerSploit.zip
-	echo -e "\tSharpSploit"
-	wget -q "https://github.com/cobbr/SharpSploit/archive/master.zip" -O ${windows_tools}/SharpSploit.zip
-	echo -e "\tNishang"
-	wget -q "https://github.com/samratashok/nishang/archive/master.zip" -O ${windows_tools}/nishang.zip
-	echo -e "\timpacket - cme"
-	get_latest_releases "https://github.com/SecureAuthCorp/impacket/" ${windows_tools}
-	get_latest_releases "https://github.com/byt3bl33d3r/CrackMapExec" ${windows_tools}
-	get_latest_releases "https://github.com/MichaelKCortez/CrackMapExecWin" ${windows_tools}
-	echo -e "\toleviewdotnet"
-	get_latest_releases "https://github.com/tyranid/oleviewdotnet" ${windows_tools}
+    # Credentials collection
+    echo -e "\tNirsoft Tools"
+    wget -q "https://download.nirsoft.net/nirsoft_package_enc_1.30.3.zip" -O "${windows_tools}/nirsoft_package_enc_1.30.3.zip"
 
-	#----------------------------------------------------------AD------------------------------------------------------------
-	echo -e "${GREEN}Getting AD tools:${NC}"
+    # Evasion and bypass
+    echo -e "\tPowerShdll"
+    get_latest_releases "https://github.com/p3nt4/PowerShdll" "${windows_tools}"
 
-	#AD Module
-	echo -e "\tADModule"
-	wget -q "https://github.com/samratashok/ADModule/archive/master.zip" -O ${windows_tools}/ADModule.zip
+    # PowerShell and Sharp Collections
+    echo -e "\tPowerSploit"
+    wget -q "https://github.com/PowerShellMafia/PowerSploit/archive/master.zip" -O "${windows_tools}/PowerSploit.zip"
+    echo -e "\tSharpSploit"
+    wget -q "https://github.com/cobbr/SharpSploit/archive/master.zip" -O "${windows_tools}/SharpSploit.zip"
+    echo -e "\tNishang"
+    wget -q "https://github.com/samratashok/nishang/archive/master.zip" -O "${windows_tools}/nishang.zip"
+    echo -e "\toleviewdotnet"
+    get_latest_releases "https://github.com/tyranid/oleviewdotnet" "${windows_tools}"
 
-	#AD Collection
-	echo -e "\tANSSI s AD Control Paths"
-	get_latest_releases "https://github.com/ANSSI-FR/AD-control-paths" ${windows_tools}
-	echo -e "\tPingCastle"
-	get_latest_releases "https://github.com/vletoux/pingcastle" ${windows_tools}
-	echo -e "\tThycoticWeakPasswordFinder"
-	wget -q "https://d36zgw9sidnotm.cloudfront.net/FreeTools/ThycoticWeakPasswordFinder.zip" -O ${windows_tools}/ThycoticWeakPasswordFinder.zip
-	echo -e "\tgo-windapsearch"
-	get_latest_releases "https://github.com/ropnop/go-windapsearch" ${windows_tools}
-	echo -e "\tadmpwd"
-	get_latest_releases "https://github.com/GreyCorbel/admpwd" ${windows_tools}
+    #----------------------------------------------------------AD------------------------------------------------------------
+    echo -e "${GREEN}Getting AD tools:${NC}"
 
-	#------------------------------------------------Mobile-------------------------------------------------------
-	echo -e "${GREEN}Getting Mobile tools...${NC}"
-	echo -e "\tcycript"
-	wget -q "https://cydia.saurik.com/api/latest/3" -O ${mobile_tools}/cycript.zip
-	echo -e "\tMobSF"
-	wget -q "https://github.com/MobSF/Mobile-Security-Framework-MobSF/archive/master.zip" -O ${mobile_tools}/Mobile-Security-Framework-MobSF.zip
-	
-	#------------------------------------------------Cloud-------------------------------------------------------
-	echo -e "${GREEN}Getting Cloud tools...${NC}"
-	echo -e "\tStormspotter"
-	get_latest_releases "https://github.com/Azure/Stormspotter/" ${cloud_tools}
-	echo -e "\tScubaGear"
-	wget -q "https://github.com/cisagov/ScubaGear/archive/master.zip" -O ${cloud_tools}/ScubaGear.zip
+    echo -e "\tADModule"
+    wget -q "https://github.com/samratashok/ADModule/archive/master.zip" -O "${windows_tools}/ADModule.zip"
+    echo -e "\tANSSI AD Control Paths"
+    get_latest_releases "https://github.com/ANSSI-FR/AD-control-paths" "${windows_tools}"
+    echo -e "\tPingCastle"
+    get_latest_releases "https://github.com/vletoux/pingcastle" "${windows_tools}"
+    echo -e "\tThycoticWeakPasswordFinder"
+    wget -q "https://d36zgw9sidnotm.cloudfront.net/FreeTools/ThycoticWeakPasswordFinder.zip" -O "${windows_tools}/ThycoticWeakPasswordFinder.zip"
+    echo -e "\tgo-windapsearch"
+    get_latest_releases "https://github.com/ropnop/go-windapsearch" "${windows_tools}"
+    echo -e "\tadmpwd"
+    get_latest_releases "https://github.com/GreyCorbel/admpwd" "${windows_tools}"
 
-	#------------------------------------------------Other-------------------------------------------------------
-	echo -e "${GREEN}Getting Other tools...${NC}"
-	echo -e "\tChisel"
-	get_latest_releases "https://github.com/jpillora/chisel" ${other_tools}
-	echo -e "\tpcileech"
-	get_latest_releases "https://github.com/ufrisk/pcileech" ${other_tools}
-	echo -e "\taquatone"
-	get_latest_releases "https://github.com/michenriksen/aquatone" ${other_tools}
-	echo -e "\tdnscat"
-	wget -q "https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-x64.tar.bz2" -O ${other_tools}/dnscat2-v0.07-client-x64.tar.bz2
-	wget -q "https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-win32.zip" -O ${other_tools}/dnscat2-v0.07-client-win32.zip
-	echo -e "\tHeidiSQL"
-	wget -q "https://www.heidisql.com/downloads/releases/HeidiSQL_11.3_64_Portable.zip" -O ${other_tools}/HeidiSQL_11.3_64_Portable.zip
-	echo -e "\tysoserial"
-	wget -q "https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar" -O ${other_tools}/ysoserial-all.jar
-	wget -q "https://github.com/pwntester/ysoserial.net/releases/latest/download/ysoserial-1.35.zip" -O ${other_tools}/ysoserial-1.35.zip
-	
-	chown $low_priv_user:$low_priv_user -R $tools_dir
+    #------------------------------------------------Mobile-------------------------------------------------------
+    echo -e "${GREEN}Getting Mobile tools:${NC}"
+    echo -e "\tMobSF"
+    wget -q "https://github.com/MobSF/Mobile-Security-Framework-MobSF/archive/master.zip" -O "${mobile_tools}/Mobile-Security-Framework-MobSF.zip"
+
+    #------------------------------------------------Cloud-------------------------------------------------------
+    echo -e "${GREEN}Getting Cloud tools:${NC}"
+    echo -e "\tScubaGear"
+    wget -q "https://github.com/cisagov/ScubaGear/archive/master.zip" -O "${cloud_tools}/ScubaGear.zip"
+
+    #------------------------------------------------Other-------------------------------------------------------
+    echo -e "${GREEN}Getting Other tools:${NC}"
+    echo -e "\tChisel"
+    get_latest_releases "https://github.com/jpillora/chisel" "${other_tools}"
+    echo -e "\tpcileech"
+    get_latest_releases "https://github.com/ufrisk/pcileech" "${other_tools}"
+    echo -e "\taquatone"
+    get_latest_releases "https://github.com/michenriksen/aquatone" "${other_tools}"
+    echo -e "\tdnscat"
+    wget -q "https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-x64.tar.bz2" -O "${other_tools}/dnscat2-v0.07-client-x64.tar.bz2"
+    wget -q "https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-win32.zip" -O "${other_tools}/dnscat2-v0.07-client-win32.zip"
+    echo -e "\tysoserial"
+    wget -q "https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar" -O "${other_tools}/ysoserial-all.jar"
+    get_latest_releases "https://github.com/pwntester/ysoserial.net" "${other_tools}"
+
+    chown "$low_priv_user:$low_priv_user" -R "$tools_dir"
 }
 
 #### Calling functions
-system_update                        || { echo -e "\n\n${RED}[Failure]${NC} System update failed.. exiting script!\n"; exit 1; }
-install_software                     || { echo -e "\n\n${RED}[Failure]${NC} Shitload of software install failed.. exiting script!\n"; exit 1; }
-wget_tools                           || { echo -e "\n\n${RED}[Failure]${NC} Download useful tools failed.. exiting script!\n"; exit 1; }
+system_update    || { echo -e "\n\n${RED}[Failure]${NC} System update failed.. exiting script!\n"; exit 1; }
+install_software || { echo -e "\n\n${RED}[Failure]${NC} Software install failed.. exiting script!\n"; exit 1; }
+wget_tools       || { echo -e "\n\n${RED}[Failure]${NC} Download tools failed.. exiting script!\n"; exit 1; }
 
-echo -e "\n${GREEN}[Success]${NC} finished! \n"
+echo -e "\n${GREEN}[Success]${NC} finished!\n"

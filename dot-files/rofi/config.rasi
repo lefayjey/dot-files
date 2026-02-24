@@ -1,0 +1,101 @@
+/* Nord-inspired rofi theme */
+/* Place in ~/.config/rofi/config.rasi */
+
+configuration {
+    show-icons:     true;
+    icon-theme:     "Papirus-Dark";
+    display-drun:   "Apps";
+    display-run:    "Run";
+    display-window: "Windows";
+    font:           "JetBrains Mono 11";
+}
+
+* {
+    bg:         #2e3440;
+    bg-alt:     #3b4252;
+    bg-sel:     #4c566a;
+    fg:         #eceff4;
+    fg-dim:     #636e7b;
+    accent:     #88c0d0;
+    urgent:     #bf616a;
+    border-col: #5e81ac;
+
+    background-color:   @bg;
+    text-color:         @fg;
+}
+
+window {
+    width:              40%;
+    border:             2px;
+    border-color:       @border-col;
+    border-radius:      8px;
+    padding:            0;
+    transparency:       "real";
+}
+
+mainbox {
+    children:           [ inputbar, listview ];
+    spacing:            0;
+    padding:            0;
+}
+
+inputbar {
+    children:           [ prompt, entry ];
+    padding:            12px 16px;
+    background-color:   @bg-alt;
+    spacing:            8px;
+}
+
+prompt {
+    text-color:         @accent;
+    background-color:   inherit;
+}
+
+entry {
+    placeholder:        "Search...";
+    placeholder-color:  @fg-dim;
+    background-color:   inherit;
+    text-color:         @fg;
+}
+
+listview {
+    lines:              8;
+    columns:            1;
+    fixed-height:       false;
+    padding:            8px 0;
+    spacing:            0;
+    scrollbar:          false;
+}
+
+element {
+    padding:            8px 16px;
+    spacing:            8px;
+}
+
+element normal.normal {
+    background-color:   @bg;
+    text-color:         @fg;
+}
+
+element alternate.normal {
+    background-color:   @bg;
+    text-color:         @fg;
+}
+
+element selected.normal {
+    background-color:   @bg-sel;
+    text-color:         @accent;
+    border:             0 0 0 3px;
+    border-color:       @accent;
+}
+
+element-icon {
+    size:               22px;
+    background-color:   inherit;
+}
+
+element-text {
+    background-color:   inherit;
+    text-color:         inherit;
+    vertical-align:     0.5;
+}

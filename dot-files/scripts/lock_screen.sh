@@ -1,12 +1,35 @@
 #!/bin/bash
 
-# Take a screenshot
-scrot /tmp/screen_locked.png
+# Modern lock screen — pixelated blur with Nord overlay
+# Dependencies: scrot, imagemagick, i3lock
 
-# Pixellate it 4x
-mogrify -scale 25% -scale 400% /tmp/screen_locked.png
-# Lock screen displaying this image.
-i3lock -i /tmp/screen_locked.png
+TMPIMG="/tmp/screen_locked.png"
 
-# Turn the screen off after a delay.
-sleep 60; pgrep i3lock && xset dpms force off
+# Take screenshot
+scrot "$TMPIMG"
+
+# Apply a gaussian blur + pixelation for a frosted-glass effect
+convert "$TMPIMG" \
+    -scale 10% \
+    -scale 1000% \
+    -fill '#2e344080' -draw 'rectangle 0,0,9999,9999' \
+    "$TMPIMG"
+
+# Lock with the processed image
+i3lock -e -i "$TMPIMG" \
+    --nofork \
+    --color=2e3440 \
+    --insidecolor=3b425200 \
+    --ringcolor=5e81acff \
+    --ringvercolor=a3be8cff \
+    --ringwrongcolor=bf616aff \
+    --keyhlcolor=88c0d0ff \
+    --bshlcolor=d08770ff \
+    --separatorcolor=00000000 \
+    --verifcolor=eceff4ff \
+    --wrongcolor=bf616aff \
+    --layoutcolor=d8dee9ff
+
+# Turn screen off after 60s if still locked
+sleep 60
+pgrep i3lock && xset dpms force off
