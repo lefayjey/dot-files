@@ -125,8 +125,9 @@ wget_tools() {
 	echo -e "\tAPI Monitor"
 	wget -q "http://www.rohitab.com/download/api-monitor-v2r13-x86-x64.zip" -O ${windows_tools}/api-monitor-v2r13-x86-x64.zip
 	echo -e "\tNetscan"
-	wget -q "https://www.softperfect.com/download/files/netscan_portable.zip" -O ${windows_tools}/netscan_portable.zip
-	
+	wget -q "https://www.softperfect.com/download/files/netscan_portable.zip" -O ${windows_tools}/netscan_portable.zipecho -e "\tSMBEagle"
+	wget -q "https://github.com/punk-security/smbeagle/releases/download/4.0.1/smbeagle_4.0.1_linux_amd64.zip" -O ${windows_tools}/smbeagle_4.0.1_linux_amd64.zip
+	wget -q "https://github.com/punk-security/smbeagle/releases/download/4.0.1/smbeagle_4.0.1_win_x64.zip" -O ${windows_tools}/smbeagle_4.0.1_win_x64.zip
 	#C2
 	echo -e "\tEmpire"
 	wget -q "https://github.com/BC-SECURITY/Empire/archive/master.zip" -O ${windows_tools}/Empire.zip
