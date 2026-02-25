@@ -1,0 +1,39 @@
+! Catppuccin Macchiato — sharpened to match i3blocks vibrancy
+! Place in ~/.Xresources and run: xrdb -merge ~/.Xresources
+
+! Special colors
+*.foreground:   #cdd6f4
+*.background:   #181926
+*.cursorColor:  #89b4fa
+
+! Black / Dark gray
+*.color0:       #181926
+*.color8:       #585b70
+
+! Red — vivid, matches i3blocks urgent
+*.color1:       #f38ba8
+*.color9:       #f5a97f
+
+! Green — sharp teal, matches i3blocks CPU/IP/BAT
+*.color2:       #94e2d5
+*.color10:      #a6e3a1
+
+! Yellow — punchy gold, matches i3blocks VPN
+*.color3:       #f9e2af
+*.color11:      #f5c211
+
+! Blue — crisp, matches i3blocks DSK / focused workspace
+*.color4:       #89b4fa
+*.color12:      #74c7ec
+
+! Magenta — vivid mauve, matches i3blocks LOAD
+*.color5:       #cba6f7
+*.color13:      #f5c2e7
+
+! Cyan — bright sky, matches i3blocks MEM/NET
+*.color6:       #94e2d5
+*.color14:      #b4f9f8
+
+! White
+*.color7:       #bac2de
+*.color15:      #cdd6f4

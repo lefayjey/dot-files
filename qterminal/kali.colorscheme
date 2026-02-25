@@ -1,94 +1,94 @@
 [General]
-Description=Smooth Tokyo Night
+Description=Kali Catppuccin
 Opacity=1
 Wallpaper=
 
 [Background]
-Color=#1a1b26
+Color=#181926
 
 [BackgroundFaint]
-Color=#1a1b26
+Color=#181926
 
 [BackgroundIntense]
-Color=#1a1b26
+Color=#1e2030
 
 [Foreground]
-Color=#c0caf5
+Color=#cdd6f4
 
 [ForegroundFaint]
-Color=#a9b1d6
+Color=#bac2de
 
 [ForegroundIntense]
-Color=#c0caf5
+Color=#cdd6f4
 
 [Color0]
-Color=#1a1b26
+Color=#181926
 
 [Color0Faint]
-Color=#1a1b26
+Color=#181926
 
 [Color0Intense]
-Color=#414868
+Color=#585b70
 
 [Color1]
-Color=#f7768e
+Color=#f38ba8
 
 [Color1Faint]
-Color=#f7768e
+Color=#f38ba8
 
 [Color1Intense]
-Color=#ff9e64
+Color=#f5a97f
 
 [Color2]
-Color=#73daca
+Color=#94e2d5
 
 [Color2Faint]
-Color=#73daca
+Color=#94e2d5
 
 [Color2Intense]
-Color=#73daca
+Color=#a6e3a1
 
 [Color3]
-Color=#dca561
+Color=#f9e2af
 
 [Color3Faint]
-Color=#dca561
+Color=#f9e2af
 
 [Color3Intense]
-Color=#e0af68
+Color=#f5c211
 
 [Color4]
-Color=#7aa2f7
+Color=#89b4fa
 
 [Color4Faint]
-Color=#7aa2f7
+Color=#89b4fa
 
 [Color4Intense]
-Color=#7aa2f7
+Color=#74c7ec
 
 [Color5]
-Color=#bb9af7
+Color=#cba6f7
 
 [Color5Faint]
-Color=#bb9af7
+Color=#cba6f7
 
 [Color5Intense]
-Color=#bb9af7
+Color=#f5c2e7
 
 [Color6]
-Color=#7dcfff
+Color=#94e2d5
 
 [Color6Faint]
-Color=#7dcfff
+Color=#94e2d5
 
 [Color6Intense]
-Color=#7dcfff
+Color=#b4f9f8
 
 [Color7]
-Color=#a9b1d6
+Color=#bac2de
 
 [Color7Faint]
-Color=#a9b1d6
+Color=#bac2de
 
 [Color7Intense]
-Color=#c0caf5
+Color=#cdd6f4

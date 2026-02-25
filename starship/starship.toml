@@ -1,0 +1,58 @@
+add_newline = false
+
+format = """
+$username$hostname$directory$git_branch$env_var_TARGET$time$cmd_duration
+[└─](bold #8bd5ca)$sudo$character"""
+
+[username]
+show_always = true
+style_user = "bold #8aadf4"
+style_root = "bold #ed8796"
+format = "[┌──\\(](bold #8bd5ca)[$user]($style)"
+
+[hostname]
+ssh_only = false
+style = "bold #8aadf4"
+format = "[@](bold #8aadf4)[$hostname]($style)[\\)](bold #8bd5ca)"
+
+[directory]
+style = "bold #cad3f5"
+truncation_length = 5
+truncation_symbol = ".../"
+format = "[-\\[](bold #8bd5ca)[$path]($style)[\\]](bold #8bd5ca)"
+
+[time]
+disabled = false
+format = " [\\[$time\\]](#8bd5ca)"
+time_format = "%d/%m %H:%M"
+
+[git_branch]
+style = "bold #eed49f"
+format = " [$symbol$branch]($style)"
+symbol = ""
+
+[git_status]
+disabled = true
+
+[python]
+style = "bold #eed49f"
+format = " [py:$version]($style)"
+
+[cmd_duration]
+min_time = 2_000
+style = "bold #eed49f"
+format = " [$duration]($style)"
+
+[env_var.TARGET]
+style = "bold #f5a97f"
+format = " [🎯$env_value]($style)"
+
+[sudo]
+disabled = false
+style = "bold #ed8796"
+symbol = "🔓"
+format = "[$symbol]($style)"
+
+[character]
+success_symbol = "[\\$](bold #8aadf4)"
+error_symbol = "[\\$](bold #ed8796)"
