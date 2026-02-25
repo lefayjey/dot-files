@@ -47,7 +47,7 @@ update_install() {
         i3blocks rofi suckless-tools htop xcwd flameshot sshfs xclip \
         ghidra filezilla ntpsec-ntpdate rlwrap 2to3 gobuster eyewitness seclists krb5-user \
         tigervnc-viewer jadx gdb ltrace dos2unix curl wget git zsh \
-        picom fonts-jetbrains-mono fonts-powerline \
+        fonts-jetbrains-mono fonts-powerline \
         tmux cool-retro-term imagemagick \
         scrot acpi ifstat xdotool feh xautolock \
         i3lock-color
@@ -376,9 +376,6 @@ copy_i3_config_files() {
 
     # ── Qterminal color scheme ──
     _copy_for_both "$SCRIPT_DIR/qterminal/kali.colorscheme" ".config/qterminal.org/color-schemes/kali.colorscheme"
-
-    # ── Picom config ──
-    _copy_for_both "$SCRIPT_DIR/picom/picom.conf" ".config/picom/picom.conf"
 
     echo -e "\n${GREEN}[Success]${NC} Copying config files\n"
 }
