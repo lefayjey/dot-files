@@ -225,13 +225,13 @@ function revshell() {
 }
 
 function dockershellhere() {
-    dirname=\${PWD##*/}
-    sudo docker run --rm -it --entrypoint=/bin/bash -v "\$(pwd):/\${dirname}" -w "/\${dirname}" "\$@"
+    local dirname="${PWD##*/}"
+    sudo docker run --rm -it --entrypoint=/bin/bash -v "$(pwd):/${dirname}" -w "/${dirname}" "$@"
 }
 
 function dockershellshhere() {
-    dirname=\${PWD##*/}
-    sudo docker run --rm -it --entrypoint=/bin/sh -v "\$(pwd):/\${dirname}" -w "/\${dirname}" "\$@"
+    local dirname="${PWD##*/}"
+    sudo docker run --rm -it --entrypoint=/bin/sh -v "$(pwd):/${dirname}" -w "/${dirname}" "$@"
 }
 ALIASES
 }
@@ -287,7 +287,11 @@ create_aliases() {
     # Prepare VM mounting script
     cat > /usr/local/sbin/vm-mount <<'EOF'
 #!/bin/bash
-setxkbmap ch
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run with sudo or as root"
+    exit 1
+fi
+
 cp /usr/share/zoneinfo/Europe/Zurich /etc/localtime
 w > /dev/null
 date
@@ -302,27 +306,33 @@ vmtoolsd -b /var/run/vmroot 2>/dev/null
 vmware-hgfsclient | while read -r folder; do
     vmwpath="/mnt/hgfs/${folder}"
     echo "[i] Mounting ${folder}   (${vmwpath})"
-    sudo mkdir -p "${vmwpath}"
-    sudo umount -f "${vmwpath}" 2>/dev/null
-    sudo vmhgfs-fuse -o allow_other -o auto_unmount ".host:/${folder}" "${vmwpath}"
-done
-sleep 2s
-
-for i in /mnt/hgfs/$(vmware-hgfsclient)/*/; do
-    ln -s "$i" /opt 2>/dev/null
+    mkdir -p "${vmwpath}"
+    umount -f "${vmwpath}" 2>/dev/null
+    vmhgfs-fuse -o allow_other -o auto_unmount ".host:/${folder}" "${vmwpath}"
+    
+    # Symlink first-level directories to /opt
+    for subdir in "${vmwpath}"/*/; do
+        if [ -d "$subdir" ]; then
+            ln -s "${subdir%/}" "/opt/$(basename "$subdir")" 2>/dev/null
+        fi
+    done
 done
 EOF
     chmod +x /usr/local/sbin/vm-mount
 
+    # Add to sudoers for passwordless execution
+    echo "$low_priv_user ALL=(ALL) NOPASSWD: /usr/local/sbin/vm-mount" > /etc/sudoers.d/vm-mount-nopasswd
+    chmod 0440 /etc/sudoers.d/vm-mount-nopasswd
+
     # Create systemd sleep hook to re-run vm-mount on VM resume
-    # vm-mount already handles: setxkbmap ch, timezone, VMware shared folders
+    # vm-mount already handles: timezone, VMware shared folders
     cat > /lib/systemd/system-sleep/99-kali-resume.sh <<'SLEEPHOOK'
 #!/bin/bash
 # Re-apply keyboard layout, timezone, and remount shared folders after VM suspend/resume
 case "$1" in
     post)
         sleep 2
-        # Re-run vm-mount (handles setxkbmap ch + timezone + shared folders)
+        # Re-run vm-mount (handles timezone + shared folders)
         /usr/local/sbin/vm-mount &
         # Also re-apply keyboard layout for every active X display (belt & suspenders)
         for disp in /tmp/.X11-unix/X*; do
@@ -350,7 +360,7 @@ SLEEPHOOK
     echo -e "\n${GREEN}[Success]${NC} Configuring aliases and zsh\n"
 }
 
-# ─── i3 / Rofi / Picom / Lock screen config files ────────────────────────────
+# ─── i3 / Rofi / Lock screen config files ────────────────────────────────────
 
 copy_i3_config_files() {
     echo -e "\n${BLUE}[Initiate]${NC} Copying i3 config files\n"

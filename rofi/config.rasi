@@ -99,3 +99,16 @@ element-text {
     text-color:         inherit;
     vertical-align:     0.5;
 }
+
+error-message {
+    padding:            20px;
+    background-color:   @bg-alt;
+    border:             2px;
+    border-color:       @urgent;
+    border-radius:      8px;
+}
+
+textbox {
+    background-color:   inherit;
+    text-color:         @urgent;
+}

@@ -163,7 +163,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86MonBrightnessUp exec sudo light -A 5
 bindsym XF86MonBrightnessDown exec sudo light -U 5
 
-# ─── Session ──────────────────────────────────────────────────────────────────
+# ─── Session / Utility ────────────────────────────────────────────────────────
+bindsym $mod+m exec --no-startup-id setxkbmap ch, exec --no-startup-id sudo /usr/local/sbin/vm-mount
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
@@ -236,8 +237,8 @@ exec --no-startup-id blueman-applet
 exec_always --no-startup-id setxkbmap ch
 
 # VMware shared folders
-exec --no-startup-id /usr/local/sbin/vm-mount
+exec --no-startup-id sudo /usr/local/sbin/vm-mount
 
 # Wallpaper (solid color fallback, override with feh --bg-fill <image>)
-exec_always --no-startup-id feh --bg-fill /usr/share/backgrounds/kali-16x9/default 2>/dev/null || feh --bg-fill /usr/share/desktop-base/kali-theme/login/background 2>/dev/null || xsetroot -solid '#181926'
+exec_always --no-startup-id feh --bg-fill ~/.wallpaper 2>/dev/null || feh --bg-fill /usr/share/desktop-base/kali-theme/login/background 2>/dev/null || xsetroot -solid '#181926'
 

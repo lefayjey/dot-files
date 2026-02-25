@@ -47,8 +47,8 @@ install_software() {
         libcurl4-openssl-dev libpcre3-dev libssh-dev \
         jxplorer veil shellter powercat dnscat2 snmp snmp-mibs-downloader
 
-    python3 -m pip install --upgrade pip
-    pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade
+    python3 -m pip install --upgrade pip --break-system-packages || python3 -m pip install --upgrade pip
+    pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade --break-system-packages || pip3 install --user pipx PyYAML alive-progress xlsxwriter sectools pwn dsinternals --upgrade
     pipx ensurepath
 
     # Scan/exploit

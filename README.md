@@ -10,8 +10,6 @@ Theme: **Catppuccin Macchiato** · Font: **JetBrains Mono**
 ├── i3/
 │   ├── config            # i3wm window manager config
 │   └── i3blocks.conf     # i3blocks status bar config
-├── picom/
-│   └── picom.conf        # Picom compositor (blur, shadows, rounded corners)
 ├── rofi/
 │   └── config.rasi       # Rofi application launcher theme
 ├── scripts/
@@ -29,7 +27,7 @@ Theme: **Catppuccin Macchiato** · Font: **JetBrains Mono**
 
 ```bash
 # Run as root or with sudo, from the repo root directory
-sudo ./install_init.sh   # Base system + zsh + aliases + i3 + picom
+sudo ./install_init.sh   # Base system + zsh + aliases + i3
 sudo ./install_tools.sh  # Pentesting tools
 ```
 
@@ -39,14 +37,13 @@ The scripts auto-detect the repo directory, so they work from any `$PWD`.
 
 | Step | Details |
 |---|---|
-| **Packages** | i3blocks, rofi, picom, i3lock-color, feh, flameshot, scrot, imagemagick, zsh, tmux, fonts, … |
+| **Packages** | i3blocks, rofi, i3lock-color, feh, flameshot, scrot, imagemagick, zsh, tmux, fonts, … |
 | **FTP / SMB** | Pure-FTPd + Samba share in `~/ftp` and `~/smb` |
 | **Zsh** | oh-my-zsh + autosuggestions + syntax-highlighting + starship prompt |
 | **Tmux** | oh-my-tmux with pentest status bar (tun0/eth0 IP) |
 | **Aliases** | Pentest shortcuts (`www`, `smb`, `vpnip`, `htb`, `thm`, docker helpers, …) |
 | **Pro aliases** | `listener`, `revshell`, `target`, `rdp`, `encode64`, `webshell`, `loot`, … |
 | **i3** | Full config with gaps, Catppuccin colors, rofi launcher, power menu, vim keys |
-| **Picom** | Dual-kawase blur, shadows, rounded corners |
 | **Lock screen** | Frosted blur screenshot + i3lock-color ring with clock display |
 | **Wallpaper** | `feh --bg-fill ~/.wallpaper` (falls back to solid `#181926`) |
 | **VM resume** | Systemd sleep hook re-applies `setxkbmap ch` + timezone on suspend/resume |
