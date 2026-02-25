@@ -200,6 +200,15 @@ HISTSIZE=50000
 SAVEHIST=50000
 ZSHOPTS
     fi
+
+    # Load Xresources for terminal colors
+    if ! grep -q "xrdb" "$zshrc"; then
+        cat >> "$zshrc" <<'XRDB'
+
+# Load terminal color scheme
+[[ -f ~/.Xresources ]] && command -v xrdb &>/dev/null && xrdb -merge ~/.Xresources
+XRDB
+    fi
 }
 
 create_aliases() {
@@ -273,6 +282,18 @@ copy_i3_config_files() {
     mkdir -p "/home/$low_priv_user/.config/rofi/"
     cp "$dotfile_dir/rofi/config.rasi" "/home/$low_priv_user/.config/rofi/config.rasi"
     chown -R "$low_priv_user" "/home/$low_priv_user/.config/rofi/"
+
+    # Copy terminal color scheme (Xresources)
+    cp "$dotfile_dir/Xresources" /root/.Xresources
+    cp "$dotfile_dir/Xresources" "/home/$low_priv_user/.Xresources"
+    chown "$low_priv_user:$low_priv_user" "/home/$low_priv_user/.Xresources"
+
+    # Copy qterminal color scheme
+    mkdir -p /root/.config/qterminal.org/color-schemes/
+    cp "$dotfile_dir/qterminal/tokyo-night.colorscheme" /root/.config/qterminal.org/color-schemes/
+    mkdir -p "/home/$low_priv_user/.config/qterminal.org/color-schemes/"
+    cp "$dotfile_dir/qterminal/tokyo-night.colorscheme" "/home/$low_priv_user/.config/qterminal.org/color-schemes/"
+    chown -R "$low_priv_user" "/home/$low_priv_user/.config/qterminal.org/"
 
     echo -e "\n${GREEN}[Success]${NC} Copying config files\n"
 }

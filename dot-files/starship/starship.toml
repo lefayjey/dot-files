@@ -1,31 +1,33 @@
+add_newline = false
+
 format = """
 $username$hostname$directory$git_branch$time$cmd_duration
-[└─](bold green)$character"""
+[└─](bold #73daca)$character"""
 
 [username]
 show_always = true
-style_user = "bold blue"
-style_root = "bold red"
-format = "[┌──\\(](bold green)[$user]($style)"
+style_user = "bold #7aa2f7"
+style_root = "bold #f7768e"
+format = "[┌──\\(](bold #73daca)[$user]($style)"
 
 [hostname]
 ssh_only = false
-style = "bold blue"
-format = "[@](bold blue)[$hostname]($style)[\\)](bold green)"
+style = "bold #7aa2f7"
+format = "[@](bold #7aa2f7)[$hostname]($style)[\\)](bold #73daca)"
 
 [directory]
-style = "bold white"
+style = "bold #c0caf5"
 truncation_length = 5
 truncation_symbol = ".../"
-format = "[-\\[](bold green)[$path]($style)[\\]](bold green)"
+format = "[-\\[](bold #73daca)[$path]($style)[\\]](bold #73daca)"
 
 [time]
 disabled = false
-format = " [\\[$time\\]](dimmed green)"
+format = " [\\[$time\\]](#73daca)"
 time_format = "%d/%m %H:%M"
 
 [git_branch]
-style = "bold yellow"
+style = "bold #dca561"
 format = " [$symbol$branch]($style)"
 symbol = ""
 
@@ -33,14 +35,14 @@ symbol = ""
 disabled = true
 
 [python]
-style = "bold yellow"
+style = "bold #dca561"
 format = " [py:$version]($style)"
 
 [cmd_duration]
 min_time = 2_000
-style = "bold yellow"
+style = "bold #dca561"
 format = " [$duration]($style)"
 
 [character]
-success_symbol = "[\\$](bold blue)"
-error_symbol = "[\\$](bold red)"
+success_symbol = "[\\$](bold #7aa2f7)"
+error_symbol = "[\\$](bold #f7768e)"

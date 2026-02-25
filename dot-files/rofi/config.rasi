@@ -1,4 +1,4 @@
-/* Nord-inspired rofi theme */
+/* Modern dark theme -- Tokyo Night inspired */
 /* Place in ~/.config/rofi/config.rasi */
 
 configuration {
@@ -11,14 +11,14 @@ configuration {
 }
 
 * {
-    bg:         #2e3440;
-    bg-alt:     #3b4252;
-    bg-sel:     #4c566a;
-    fg:         #eceff4;
-    fg-dim:     #636e7b;
-    accent:     #88c0d0;
-    urgent:     #bf616a;
-    border-col: #5e81ac;
+    bg:         #1a1b26;
+    bg-alt:     #24283b;
+    bg-sel:     #414868;
+    fg:         #c0caf5;
+    fg-dim:     #565f89;
+    accent:     #7dcfff;
+    urgent:     #f7768e;
+    border-col: #7aa2f7;
 
     background-color:   @bg;
     text-color:         @fg;

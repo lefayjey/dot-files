@@ -12,23 +12,23 @@ scrot "$TMPIMG"
 convert "$TMPIMG" \
     -scale 10% \
     -scale 1000% \
-    -fill '#2e344080' -draw 'rectangle 0,0,9999,9999' \
+    -fill '#1a1b2680' -draw 'rectangle 0,0,9999,9999' \
     "$TMPIMG"
 
 # Lock with the processed image
 i3lock -e -i "$TMPIMG" \
     --nofork \
-    --color=2e3440 \
-    --insidecolor=3b425200 \
-    --ringcolor=5e81acff \
-    --ringvercolor=a3be8cff \
-    --ringwrongcolor=bf616aff \
-    --keyhlcolor=88c0d0ff \
-    --bshlcolor=d08770ff \
+    --color=1a1b26 \
+    --insidecolor=24283b00 \
+    --ringcolor=7aa2f7ff \
+    --ringvercolor=73dacaff \
+    --ringwrongcolor=f7768eff \
+    --keyhlcolor=7dcfffff \
+    --bshlcolor=ff9e64ff \
     --separatorcolor=00000000 \
-    --verifcolor=eceff4ff \
-    --wrongcolor=bf616aff \
-    --layoutcolor=d8dee9ff
+    --verifcolor=c0caf5ff \
+    --wrongcolor=f7768eff \
+    --layoutcolor=a9b1d6ff
 
 # Turn screen off after 60s if still locked
 sleep 60

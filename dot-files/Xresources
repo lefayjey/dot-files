@@ -1,0 +1,39 @@
+! Smooth Dark Theme -- Matching Rofi Palette
+! Place in ~/.Xresources and run: xrdb -merge ~/.Xresources
+
+! Special colors - Using the slightly raised dark blue for a smoother feel
+*.foreground:   #c0caf5
+*.background:   #1a1b26
+*.cursorColor:  #7dcfff
+
+! Black / Gray
+*.color0:       #1a1b26
+*.color8:       #414868
+
+! Red / Coral
+*.color1:       #f7768e
+*.color9:       #ff9e64
+
+! Green / Cyan-Green (Smoother than pure green)
+*.color2:       #73daca
+*.color10:      #73daca
+
+! Yellow / Amber
+*.color3:       #dca561
+*.color11:      #e0af68
+
+! Blue
+*.color4:       #7aa2f7
+*.color12:      #7aa2f7
+
+! Magenta / Purple
+*.color5:       #bb9af7
+*.color13:      #bb9af7
+
+! Cyan (Rofi Accent)
+*.color6:       #7dcfff
+*.color14:      #7dcfff
+
+! White
+*.color7:       #a9b1d6
+*.color15:      #c0caf5

@@ -20,12 +20,12 @@ set $WS10 "10"
 font pango:JetBrains Mono, FontAwesome 10
 
 # Window colors          border  backgr  text    indicator child_border
-client.focused           #5e81ac #5e81ac #eceff4 #88c0d0   #5e81ac
-client.focused_inactive  #4c566a #4c566a #d8dee9 #4c566a   #4c566a
-client.unfocused         #3b4252 #3b4252 #636e7b #3b4252   #3b4252
-client.urgent            #bf616a #bf616a #eceff4 #bf616a   #bf616a
-client.placeholder       #2e3440 #2e3440 #eceff4 #2e3440   #2e3440
-client.background        #2e3440
+client.focused           #7aa2f7 #7aa2f7 #c0caf5 #7dcfff   #7aa2f7
+client.focused_inactive  #414868 #414868 #a9b1d6 #414868   #414868
+client.unfocused         #1a1b26 #1a1b26 #565f89 #1a1b26   #1a1b26
+client.urgent            #f7768e #f7768e #c0caf5 #f7768e   #f7768e
+client.placeholder       #1a1b26 #1a1b26 #c0caf5 #1a1b26   #1a1b26
+client.background        #1a1b26
 
 # Gaps (requires i3-gaps)
 gaps inner 1
@@ -167,14 +167,14 @@ bar {
     tray_padding 4
 
     colors {
-        separator  #4c566a
-        background #2e3440
-        statusline #d8dee9
+        separator  #414868
+        background #1a1b26
+        statusline #c0caf5
         #                  border  backgr  text
-        focused_workspace  #5e81ac #5e81ac #eceff4
-        active_workspace   #4c566a #4c566a #d8dee9
-        inactive_workspace #2e3440 #2e3440 #636e7b
-        urgent_workspace   #bf616a #bf616a #eceff4
+        focused_workspace  #7aa2f7 #7aa2f7 #c0caf5
+        active_workspace   #414868 #414868 #a9b1d6
+        inactive_workspace #1a1b26 #1a1b26 #565f89
+        urgent_workspace   #f7768e #f7768e #c0caf5
     }
 }
 
