@@ -45,7 +45,7 @@ update_install() {
     apt update && apt upgrade -y
     apt install -y \
         i3blocks rofi suckless-tools htop xcwd flameshot sshfs xclip \
-        ghidra filezilla ntpsec-ntpdate rlwrap 2to3 gobuster eyewitness seclists krb5-user \
+        ghidra filezilla ntpsec-ntpdate rlwrap gobuster eyewitness seclists krb5-user \
         tigervnc-viewer jadx gdb ltrace dos2unix curl wget git zsh \
         fonts-jetbrains-mono fonts-powerline \
         tmux cool-retro-term imagemagick \
