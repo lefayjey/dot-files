@@ -54,7 +54,8 @@ install_software() {
     # Scan/exploit
     pipx install pwncat-cs --force
     pipx install wesng --force
-
+    pipx install penelope-shell-handler --force
+    
     # AD/Windows
     pipx install pypykatz --force
     pipx install autobloody --force
