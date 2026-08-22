@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # Author: lefayjey
-# last updated: 24/02/2026
+# last updated: 23/08/2026
 
 RED='\033[1;31m'
 GREEN='\033[1;32m'
@@ -16,11 +16,6 @@ mobile_tools="${tools_dir}/mobile"
 other_tools="${tools_dir}/other"
 cloud_tools="${tools_dir}/cloud"
 
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run with sudo or as root"
-    exit 1
-fi
-
 get_latest_releases() {
     urls=$(curl -s "$1/releases/latest" | grep "tag" | cut -d "\"" -f 2)
     for u in $urls; do
@@ -33,14 +28,14 @@ get_latest_releases() {
 
 system_update() {
     echo -e "\n${BLUE}[Initiate]${NC} System update\n"
-    apt update && apt upgrade -y
+    sudo apt update && apt upgrade -y
     echo -e "\n${GREEN}[Success]${NC} System update\n"
 }
 
 install_software() {
     echo -e "\n${BLUE}[Initiate]${NC} Install additional software\n"
 
-    apt install -y cloc sloccount renameutils html2text npm golang \
+    sudo apt install -y cloc sloccount renameutils html2text npm golang \
         ranger feh scrot jsbeautifier blueman ideviceinstaller neovim \
         parallel mono-devel default-jdk redis-server freetds-bin freetds-common freetds-dev \
         network-manager-openvpn network-manager-ssh network-manager-openconnect \
@@ -73,29 +68,6 @@ install_software() {
     pipx install scoutsuite --force
     pipx install prowler --force
 
-    # linWinPwn tooling
-    pipx install git+https://github.com/dirkjanm/ldapdomaindump.git --force
-    pipx install git+https://github.com/Pennyw0rth/NetExec.git --force
-    pipx install git+https://github.com/fortra/impacket.git --force
-    pipx install git+https://github.com/dirkjanm/adidnsdump.git --force
-    pipx install git+https://github.com/zer1t0/certi.git --force
-    pipx install git+https://github.com/ly4k/Certipy.git --force
-    pipx install git+https://github.com/dirkjanm/bloodhound.py --force
-    pipx install "git+https://github.com/dirkjanm/BloodHound.py@bloodhound-ce" --force --suffix '_ce'
-    pipx install git+https://github.com/franc-pentest/ldeep.git --force
-    pipx install git+https://github.com/garrettfoster13/pre2k.git --force
-    pipx install git+https://github.com/zblurx/certsync.git --force
-    pipx install hekatomb --force
-    pipx install git+https://github.com/blacklanternsecurity/MANSPIDER --force
-    pipx install git+https://github.com/p0dalirius/Coercer --force
-    pipx install git+https://github.com/CravateRouge/bloodyAD --force
-    pipx install git+https://github.com/login-securite/DonPAPI --force
-    pipx install git+https://github.com/p0dalirius/RDWAtool --force
-    pipx install git+https://github.com/almandin/krbjack --force
-    pipx install git+https://github.com/CompassSecurity/mssqlrelay.git --force
-    pipx install git+https://github.com/oppsec/breads.git --force
-    pipx install git+https://github.com/p0dalirius/smbclient-ng --force
-
     # GEF for GDB
     bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
@@ -103,7 +75,8 @@ install_software() {
 }
 
 wget_tools() {
-    mkdir -p "${windows_tools}" "${other_tools}" "${mobile_tools}" "${cloud_tools}"
+    sudo mkdir -p "${windows_tools}" "${other_tools}" "${mobile_tools}" "${cloud_tools}"
+    sudo chown "$low_priv_user:$low_priv_user" -R "$tools_dir"
 
     #-------------------------------------------------------Windows----------------------------------------------------------
     echo -e "${GREEN}Getting Windows tools:${NC}"
@@ -186,7 +159,6 @@ wget_tools() {
     wget -q "https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar" -O "${other_tools}/ysoserial-all.jar"
     get_latest_releases "https://github.com/pwntester/ysoserial.net" "${other_tools}"
 
-    chown "$low_priv_user:$low_priv_user" -R "$tools_dir"
 }
 
 #### Calling functions
